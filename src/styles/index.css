@@ -1,0 +1,11 @@
+/* --------root---------------- */
+:root {
+	--prime: #007bff;
+	--background: #e9ecef;
+	--white-inner: #fff;
+}
+
+[data-theme="dark"] {
+	--prime: #212529;
+	--background: #6c757d;
+}

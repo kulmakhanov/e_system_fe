@@ -1,0 +1,32 @@
+import { useMemo, useState } from "react";
+
+const useSortableData = (items, config = null) => {
+  const [sortConfig, setSortConfig] = useState(config);
+
+  const sortedItems = useMemo(() => {
+    let sortableItems = [...items];
+    if(sortConfig !== null) {
+      sortableItems.sort((a, b) => {
+        if(a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "bi bi-chevron-up" ? -1 : 1;
+        }
+        if(a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "bi bi-chevron-up" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [items, sortConfig]);
+
+  const requestSort = key => {
+    let direction = "bi bi-chevron-up";
+    if(sortConfig && sortConfig.key === key && sortConfig.direction === "bi bi-chevron-up") {
+      direction = "bi bi-chevron-down";
+    }
+    setSortConfig({ key, direction });
+  };
+  return { items: sortedItems, requestSort, sortConfig };
+};
+
+export default useSortableData;
